@@ -1134,24 +1134,30 @@ export default (function(window, document, undefined) {
       }
 
       TextureImageLoader.prototype.loadTexture = function(src, texture, callback) {
+        if (authHeader) {
+          fetch(src, { headers: 
+            {'Authorization': authHeader}
+          }).then(response => response.blob()).then(blob => {
+            this.image.src = URL.createObjectURL(blob);
+          })
+        } else {
+         this.image.src = src;
+        }
         this.texture = texture;
         this.callback = callback;
-        fetch(src, { headers: 
-          {'Authorization': authHeader}
-        }).then(response => response.blob()).then(blob => {
-          this.image.src = URL.createObjectURL(blob);
-        })
-        // this.image.src = src;
       };
 
       function PendingTextureRequest(node, src, texture, callback) {
         this.node = node;
-        fetch(src, { headers: 
-          {'Authorization': authHeader}
-        }).then(response => response.blob()).then(blob => {
-          this.src = URL.createObjectURL(blob);
-        })
-        // this.src = src;
+        if (authHeader) {
+          fetch(src, { headers: 
+            {'Authorization': authHeader}
+          }).then(response => response.blob()).then(blob => {
+            this.image.src = URL.createObjectURL(blob);
+          })
+        } else {
+         this.image.src = src;
+        }
         this.texture = texture;
         this.callback = callback;
       }
