@@ -16,9 +16,9 @@
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "build": "rollup -c",
-    "start": "rollup -c -w"
+    "start": "rollup -c -w",
+    "prepare": "npm run build"
   },
-  "prepare": "npm run build",
   "peerDependencies": {
     "prop-types": "^15.5.4",
     "react": "^16.8.6",
