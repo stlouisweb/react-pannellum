@@ -12,7 +12,7 @@ export default (function(window, document, undefined) {
     var world;
     var vtmps;
     var pose;
-    var image, imageType, dynamic;
+    var image, imageType, dynamic, authHeader;
     var texCoordBuffer, cubeVertBuf, cubeVertTexCoordBuf, cubeVertIndBuf;
     var globalParams;
 
@@ -36,6 +36,7 @@ export default (function(window, document, undefined) {
      */
     this.init = function(_image, _imageType, _dynamic, haov, vaov, voffset, callback, params) {
       // Default argument for image type
+
       if (_imageType === undefined)
         _imageType = 'equirectangular';
 
@@ -47,6 +48,10 @@ export default (function(window, document, undefined) {
 
       imageType = _imageType;
       image = _image;
+      authHeader = "";
+      if (_image.authHeader) {
+        authHeader = _image.authHeader;
+      }
       dynamic = _dynamic;
       globalParams = params || {};
 
@@ -1131,12 +1136,22 @@ export default (function(window, document, undefined) {
       TextureImageLoader.prototype.loadTexture = function(src, texture, callback) {
         this.texture = texture;
         this.callback = callback;
-        this.image.src = src;
+        fetch(src, { headers: 
+          {'Authorization': authHeader}
+        }).then(response => response.blob()).then(blob => {
+          this.image.src = URL.createObjectURL(blob);
+        })
+        // this.image.src = src;
       };
 
       function PendingTextureRequest(node, src, texture, callback) {
         this.node = node;
-        this.src = src;
+        fetch(src, { headers: 
+          {'Authorization': authHeader}
+        }).then(response => response.blob()).then(blob => {
+          this.src = URL.createObjectURL(blob);
+        })
+        // this.src = src;
         this.texture = texture;
         this.callback = callback;
       }

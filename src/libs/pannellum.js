@@ -288,7 +288,6 @@ export default (function(window, document, undefined) {
       origPitch = config.pitch;
 
       var i, p;
-
       if (config.type == 'cubemap') {
         panoImage = [];
         for (i = 0; i < 6; i++) {
@@ -424,6 +423,7 @@ export default (function(window, document, undefined) {
           }
           xhr.responseType = 'blob';
           xhr.setRequestHeader('Accept', 'image/*,*/*;q=0.9');
+          xhr.setRequestHeader('Authorization', config.authHeader);
           xhr.withCredentials = config.crossOrigin === 'use-credentials';
           xhr.send();
         }
@@ -461,8 +461,9 @@ export default (function(window, document, undefined) {
      * @private
      */
     function onImageLoad() {
-      if (!renderer)
+      if (!renderer) {
         renderer = new libpannellum.renderer(renderContainer);
+      }
 
       // Only add event listeners once
       if (!listenersAdded) {
@@ -505,7 +506,6 @@ export default (function(window, document, undefined) {
         if (window.navigator.pointerEnabled)
           container.style.touchAction = 'none';
       }
-
       renderInit();
       setHfov(config.hfov); // possibly adapt hfov after configuration and canvas is complete; prevents empty space on top or bottom by zomming out too much
       setTimeout(function(){isTimedOut = true;}, 500);
