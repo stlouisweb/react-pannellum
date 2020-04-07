@@ -423,7 +423,9 @@ export default (function(window, document, undefined) {
           }
           xhr.responseType = 'blob';
           xhr.setRequestHeader('Accept', 'image/*,*/*;q=0.9');
-          xhr.setRequestHeader('Authorization', config.authHeader);
+          if (config.authHeader) {
+            xhr.setRequestHeader('Authorization', config.authHeader);
+          }
           xhr.withCredentials = config.crossOrigin === 'use-credentials';
           xhr.send();
         }
