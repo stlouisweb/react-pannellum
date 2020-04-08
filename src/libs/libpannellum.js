@@ -1149,6 +1149,8 @@ export default (function(window, document, undefined) {
 
       function PendingTextureRequest(node, src, texture, callback) {
         this.node = node;
+        console.log('src')
+        console.log(src)
         if (authHeader) {
           fetch(src, { headers: 
             {'Authorization': authHeader}
