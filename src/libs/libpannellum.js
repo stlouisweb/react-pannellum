@@ -1153,10 +1153,10 @@ export default (function(window, document, undefined) {
           fetch(src, { headers: 
             {'Authorization': authHeader}
           }).then(response => response.blob()).then(blob => {
-            this.image.src = URL.createObjectURL(blob);
+            this.src = URL.createObjectURL(blob);
           })
         } else {
-         this.image.src = src;
+         this.src = src;
         }
         this.texture = texture;
         this.callback = callback;
