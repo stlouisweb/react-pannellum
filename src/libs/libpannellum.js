@@ -1134,6 +1134,8 @@ export default (function(window, document, undefined) {
       }
 
       TextureImageLoader.prototype.loadTexture = function(src, texture, callback) {
+        console.log('TILsrc')
+        console.log(src)
         if (authHeader) {
           fetch(src, { headers: 
             {'Authorization': authHeader}
@@ -1149,7 +1151,7 @@ export default (function(window, document, undefined) {
 
       function PendingTextureRequest(node, src, texture, callback) {
         this.node = node;
-        console.log('src')
+        console.log('pending-src')
         console.log(src)
         if (authHeader) {
           fetch(src, { headers: 
